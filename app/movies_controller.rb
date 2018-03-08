@@ -8,7 +8,7 @@
 def can_be_instantiated_and_then_saved
   movie = Movie.new
   movie.title = "This is a title."
-  __
+  movie.save
 end
 
 def can_be_created_with_a_hash_of_attributes
@@ -20,9 +20,11 @@ def can_be_created_with_a_hash_of_attributes
       in_theaters: false
   }
   movie = Movie.new(attributes)
+  movie.save
+  movie
 end
 
-def can_be_created_in_a_block(args = {})
+def can_be_created_in_a_block(args = {title: "Home Alone", release_date: 1990})
   Movie.create do |m|
     m.title = args[:title]
    m.release_date = args[:release_date]
@@ -43,7 +45,7 @@ def can_get_size_of_the_database
 end
 
 def can_find_the_first_item_from_the_database_using_id
-  Movie.find_by(id:1)
+  Movie.find_by(id:1).title
 end
 
 def can_find_by_multiple_attributes
@@ -63,17 +65,18 @@ end
 def can_be_found_updated_and_saved
   # Updtate the title "Awesome Flick" to "Even Awesomer Flick"
   Movie.create(title: "Awesome Flick")
-  Movie.find_by(title: "Awesome Flick")
-  Movie.title= "Even Awesomer Flick" #or .update? can u do .update then .save?
-  Movie.save
+  movie= Movie.find_by(title: "Awesome Flick")
+  movie.update(title: "Even Awesomer Flick")  #or .update? can u do .update then .save?
+  movie.save
 
 end
 
 def can_update_using_update_method
   # Update movie title to "Wat, huh?"
   Movie.create(title: "Wat?")
-  Movie.update(title:"Wat, huh?")
-  Movie.save #is this necessary? what else would go here?
+  movie = Movie.find_by(title: "Wat?")
+  movie.update(title: "Wat, huh?")
+  movie.save #is this necessary? what else would go here?
 end
 
 def can_update_multiple_items_at_once
@@ -86,13 +89,14 @@ end
 
 def can_destroy_a_single_item
   Movie.create(title: "That One Where the Guy Kicks Another Guy Once")
-  Movie.find_by(title:"That One Where the Guy Kicks Another Guy Once")
-  Movie.destroy
+  movie= Movie.find_by(title:"That One Where the Guy Kicks Another Guy Once")
+  movie.destroy
 end
 
 def can_destroy_all_items_at_once
   10.times do |i|
     Movie.create(title: "Movie_#{i}")
+
   end
   Movie.destroy_all
 end
