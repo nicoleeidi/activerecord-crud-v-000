@@ -11,14 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180308170608) do
+ActiveRecord::Schema.define(version: 20180308193819) do
 
-  create_table "movies", force: :cascade do |t|
-    t.string   "title"
-    t.datetime "release_date"
-    t.string   "director"
-    t.string   "lead"
-    t.boolean  "in_theatres"
-  end
+# Could not dump table "movies" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
 end
